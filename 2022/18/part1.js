@@ -1,16 +1,15 @@
 const fs = require("fs");
 const input = fs.readFileSync("./input.txt", "utf8").trim();
 
-const sum = (a, b) => a + b;
-
-const getAdjacentCubes = ([x, y, z]) => [
-  [x, y, z + 1],
-  [x, y, z - 1],
-  [x, y + 1, z],
-  [x, y - 1, z],
-  [x + 1, y, z],
-  [x - 1, y, z],
-];
+const getAdjacentCubes = ([x, y, z]) =>
+  [
+    [x, y, z + 1],
+    [x, y, z - 1],
+    [x, y + 1, z],
+    [x, y - 1, z],
+    [x + 1, y, z],
+    [x - 1, y, z],
+  ].map((c) => c.join(","));
 
 const cubes = input
   .split("\n")
@@ -18,7 +17,7 @@ const cubes = input
 
 const solution = cubes.reduce(
   ({ viewed, sides }, cube) => {
-    let adjacent = getAdjacentCubes(cube).map((c) => c.join(","));
+    let adjacent = getAdjacentCubes(cube);
     sides += 6 - adjacent.filter((val) => viewed.includes(val)).length * 2;
     viewed.push(cube.join(","));
 
